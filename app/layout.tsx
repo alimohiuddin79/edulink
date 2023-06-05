@@ -1,3 +1,4 @@
+import Footer from './components/Footer'
 import Header from './components/Header'
 import { ThemeProvider } from './context/ThemeContext'
 import './globals.css'
@@ -38,7 +39,8 @@ export default function RootLayout({
             '
           >
             <Header />
-           {children}
+            {children}
+            <Footer />
           </div>
         </ThemeProvider>
       </body>
