@@ -7,7 +7,6 @@ import AboutSection from './components/sections/AboutSection'
 import CounselorSection from './components/sections/CounselorSection'
 import ResumeSection from './components/sections/ResumeSection'
 import QuestionnaireSection from './components/sections/QuestionnaireSection'
-Head
 
 export default function Home() {
   return (
@@ -17,6 +16,7 @@ export default function Home() {
         {/* <meta /> */}
         <title>Eduling</title>
       </Head>
+
       <HeroSection />
       <ServicesSection />
       <AboutSection />

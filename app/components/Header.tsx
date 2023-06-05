@@ -1,10 +1,16 @@
+"use client"
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import DarkModeToggle from "./DarkModeToggle";
 import Link from "next/link";
 import Button from "./Button";
+import SignUpModal from "./SignUpModal";
+import LoginModal from "./LoginModal";
+ 
 
 const Header = () => {
+  const [signUpModal, setSignUpModal] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
   return (
     <header
       className="
@@ -59,8 +65,10 @@ const Header = () => {
               gap-x-3
             "
         >
-          <Button type="button">Login</Button>
-          <Button type="button">Sign Up</Button>
+          <Button onClick={() => setLoginModal(true)} type="button">Login</Button>
+          <LoginModal isOpen={loginModal} onClose={() => setLoginModal(false)} />
+          <Button onClick={() => setSignUpModal(true)} type="button">Sign Up</Button>
+          <SignUpModal isOpen={signUpModal} onClose={() => setSignUpModal(false)} />
         </div>
       </nav>
     </header>
