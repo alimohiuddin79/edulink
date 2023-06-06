@@ -17,6 +17,7 @@ const Counters = () => {
                 flex
                 flex-col
                 gap-y-3
+                text-start
             '
         >
             <Heading>453</Heading>
@@ -34,6 +35,7 @@ const Counters = () => {
                 flex
                 flex-col
                 gap-y-3
+                text-start
             '
         >
             <Heading>10+</Heading>
@@ -51,6 +53,7 @@ const Counters = () => {
                 flex
                 flex-col
                 gap-y-3
+                text-start
             '
         >
             <Heading>681</Heading>
@@ -68,6 +71,7 @@ const Counters = () => {
                 flex
                 flex-col
                 gap-y-3
+                text-start
             '
         >
             <Heading>8</Heading>
