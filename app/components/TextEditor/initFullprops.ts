@@ -16,6 +16,9 @@ const initFullProps = {
       "pagebreak",
       "image",
       "media",
+      "table",
+      "link",
+      "lists",
     ],
     mobile: {
       theme: "mobile",
