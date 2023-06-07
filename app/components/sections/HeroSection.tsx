@@ -1,18 +1,21 @@
+"use client";
 import Image from "next/image";
 import React from "react";
-import HeroImage from "public/assets/images/Hero Image.png"
+import HeroImage from "public/assets/images/Hero Image.png";
 import Heading from "../Heading";
 import Button from "../Button";
+import { signOut, useSession } from "next-auth/react";
 
 const HeroSection = () => {
+  const session = useSession();
   return (
     <>
       <section className="py-32">
-        <div 
-            className="
+        <div
+          className="
                 flex
             "
-            >
+        >
           <div
             className="
                         flex-1
@@ -23,32 +26,39 @@ const HeroSection = () => {
           >
             <Heading>Get Quality Consultation Through Eduling</Heading>
             <h2
-                className="
+              className="
                     text-[48px]
                     font-bold
                 "
             >
-                Build Your Successful Career Now
+              Build Your Successful Career Now
             </h2>
             <p
-                className="
+              className="
                     text-lg
                     font-normal
                 "
             >
-                Eduling create your career path and lead you towards your successful career
+              Eduling create your career path and lead you towards your
+              successful career
             </p>
             <div
-                className="
+              className="
                     flex
                     gap-x-4
                 "
             >
-                <Button
-                    type="button"
-                >
-                    Sign Up
-                </Button>
+              {session?.status === "authenticated" ? (
+                <>
+                  <Button onClick={() => signOut()} type="button">
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button type="button">Sign Up</Button>
+                </>
+              )}
             </div>
           </div>
           <div

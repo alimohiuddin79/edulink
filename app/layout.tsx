@@ -1,5 +1,6 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import AuthProvider from "./context/AuthContext";
 import { ChakraProviders } from "./context/ChakraContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import "./globals.css";
@@ -40,10 +41,11 @@ export default function RootLayout({
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
       <body className={montserrat.className}>
-        <ChakraProviders>
-          <ThemeProvider>
-            <div
-              className="
+        <AuthProvider>
+          <ChakraProviders>
+            <ThemeProvider>
+              <div
+                className="
               max-w-screen-xl
               min-h-screen
               overflow-x-hidden
@@ -53,13 +55,14 @@ export default function RootLayout({
               py-4
               mx-auto
             "
-            >
-              <Header />
-              {children}
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </ChakraProviders>
+              >
+                <Header />
+                {children}
+                <Footer />
+              </div>
+            </ThemeProvider>
+          </ChakraProviders>
+        </AuthProvider>
       </body>
     </html>
   );

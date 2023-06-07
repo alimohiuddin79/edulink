@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -21,6 +21,9 @@ import {
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import Button from "./Button";
 
 interface ModalarProps {
@@ -30,23 +33,20 @@ interface ModalarProps {
 
 const SignUpModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
   const toast = useToast();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      name: "",
       email: "",
       password: "",
-      type: 0,
+      type: "student",
     },
     validationSchema: Yup.object({
-      firstName: Yup.string()
+      name: Yup.string()
         .min(2, "must be at least 2 character long")
         .max(12, "Too long")
         .required("Please enter your name"),
-      lasttName: Yup.string()
-        .min(2, "must be at least 2 character long")
-        .max(12, "Too long")
-        .notRequired(),
       email: Yup.string()
         .email()
         .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
@@ -55,10 +55,33 @@ const SignUpModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
         .min(8, "must be at least 8 character long")
         .max(30, "No one can hack your password now.")
         .required("Please enter your password"),
-      type: Yup.number().min(0).max(1).required("Which one you are?"),
+      type: Yup.string().required("Which one you are?").oneOf(["student", "counselor"], "Invalid type"),
     }),
     onSubmit: (values) => {
+      setLoading(true);
       console.log(values);
+      axios.post('/api/register', values)
+      .then(() => {
+        toast({
+          title: 'Account created.',
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+        signIn('credentials', values);
+        router.push("/resume-builder");
+      })
+      .catch(() => {
+        toast({
+          title: 'Something went wrong',
+          status: 'error',
+          isClosable: true
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
       formik.resetForm();
     },
   });
@@ -86,46 +109,24 @@ const SignUpModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
               <VStack rowGap={"24px"}>
                 <FormControl
                   isInvalid={
-                    !!formik.touched.firstName && !!formik.errors.firstName
+                    !!formik.touched.name && !!formik.errors.name
                   }
                   isRequired
                 >
-                  <FormLabel htmlFor="firstName">First Name</FormLabel>
+                  <FormLabel htmlFor="name">Name</FormLabel>
                   <Input
                     variant={"outline"}
-                    id="firstName"
-                    name="firstName"
+                    id="name"
+                    name="name"
                     type="text"
-                    placeholder="John"
+                    placeholder="John Doe"
                     onChange={formik.handleChange}
-                    value={formik.values.firstName}
+                    value={formik.values.name}
                     required
                   />
                   <FormErrorMessage>
-                    {formik.touched.firstName && formik.errors.firstName ? (
-                      <div>{formik.errors.firstName}</div>
-                    ) : null}
-                  </FormErrorMessage>
-                </FormControl>
-
-                <FormControl
-                  isInvalid={
-                    !!formik.touched.lastName && !!formik.errors.lastName
-                  }
-                >
-                  <FormLabel htmlFor="lastName">Last Name</FormLabel>
-                  <Input
-                    variant={"outline"}
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    placeholder="Doe"
-                    onChange={formik.handleChange}
-                    value={formik.values.lastName}
-                  />
-                  <FormErrorMessage>
-                    {formik.touched.lastName && formik.errors.lastName ? (
-                      <div>{formik.errors.lastName}</div>
+                    {formik.touched.name && formik.errors.name ? (
+                      <div>{formik.errors.name}</div>
                     ) : null}
                   </FormErrorMessage>
                 </FormControl>
@@ -178,10 +179,10 @@ const SignUpModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
 
                 <FormControl as="fieldset" isRequired>
                   <FormLabel as="legend">Select a type</FormLabel>
-                  <RadioGroup defaultValue="0">
+                  <RadioGroup defaultValue="student">
                     <HStack spacing="24px">
-                      <Radio colorScheme="teal" value="0">Student</Radio>
-                      <Radio value="1">Counselor</Radio>
+                      <Radio colorScheme="teal" value="student">Student</Radio>
+                      <Radio colorScheme="teal" value="counselor">Counselor</Radio>
                     </HStack>
                   </RadioGroup>
                   <FormErrorMessage>
@@ -203,18 +204,7 @@ const SignUpModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
                 <Button onClick={onClose} type="button" secondary>
                   Close
                 </Button>
-                <Button
-                 type="submit"
-                 onClick={() =>
-                  toast({
-                    title: 'Account created.',
-                    description: "We've created your account for you.",
-                    status: 'success',
-                    duration: 3000,
-                    isClosable: true,
-                  })
-                }
-                >
+                <Button type="submit" disabled={loading}>
                   Sign Up
                 </Button>
               </div>

@@ -15,8 +15,7 @@ export default function Home() {
         {/* TODO: Import all meta tags later */}
         {/* <meta /> */}
         <title>Eduling</title>
-      </Head>
-
+      </Head>      
       <HeroSection />
       <ServicesSection />
       <AboutSection />

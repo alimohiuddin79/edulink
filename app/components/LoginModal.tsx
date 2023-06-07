@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -13,13 +13,13 @@ import {
   Input,
   FormErrorMessage,
   VStack,
-  HStack,
-  Radio,
-  RadioGroup,
+  useToast
 } from "@chakra-ui/react";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import Button from "./Button";
 
 interface ModalarProps {
@@ -28,13 +28,13 @@ interface ModalarProps {
 }
 
 const LoginModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
       email: "",
       password: "",
-      type: 0,
     },
     validationSchema: Yup.object({
       email: Yup.string()
@@ -47,7 +47,31 @@ const LoginModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
         .required("Please enter your password"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+      setLoading(true);
+      signIn('credentials', {
+        ...values,
+        redirect: false
+      })
+      .then((callback) => {
+        if (callback?.error) {
+          toast({
+            title: `${callback?.error}`,
+            status: 'error',
+            isClosable: true
+          });
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast({
+            title: 'Logged In',
+            status: 'success',
+            isClosable: true
+          });
+          router.push("/resume-builder");
+        }
+      })
+      .finally(() => setLoading(false));
       formik.resetForm();
     },
   });
@@ -133,7 +157,7 @@ const LoginModal: React.FC<ModalarProps> = ({ isOpen, onClose }) => {
                 <Button onClick={onClose} type="button" secondary>
                   Close
                 </Button>
-                <Button type="submit">Login</Button>
+                <Button type="submit" disabled={loading}>Login</Button>
               </div>
             </ModalFooter>
           </ModalContent>

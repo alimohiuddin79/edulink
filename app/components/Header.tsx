@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import React, { useState } from "react";
 import DarkModeToggle from "./DarkModeToggle";
@@ -6,9 +6,10 @@ import Link from "next/link";
 import Button from "./Button";
 import SignUpModal from "./SignUpModal";
 import LoginModal from "./LoginModal";
- 
+import { useSession, signOut } from "next-auth/react";
 
 const Header = () => {
+  const session = useSession();
   const [signUpModal, setSignUpModal] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   return (
@@ -47,7 +48,7 @@ const Header = () => {
             <Link href={"/resume-builder"}>Resume Builder</Link>
           </li>
           <li>
-            <Link href={"/hire-counselor"}>Hire a Counselor</Link>
+            <Link href={"/counselors"}>Hire a Counselor</Link>
           </li>
           <li>
             <Link href={"/blogs"}>Blogs</Link>
@@ -65,10 +66,31 @@ const Header = () => {
               gap-x-3
             "
         >
-          <Button onClick={() => setLoginModal(true)} type="button">Login</Button>
-          <LoginModal isOpen={loginModal} onClose={() => setLoginModal(false)} />
-          <Button onClick={() => setSignUpModal(true)} type="button">Sign Up</Button>
-          <SignUpModal isOpen={signUpModal} onClose={() => setSignUpModal(false)} />
+          {session?.status === "authenticated" ? (
+            <>
+            {session?.data?.user?.name}
+            <Button onClick={() => signOut()} type="button">
+                Sign Out
+            </Button>
+            </>
+          ) : (
+            <>
+              <Button onClick={() => setLoginModal(true)} type="button">
+                Login
+              </Button>
+              <LoginModal
+                isOpen={loginModal}
+                onClose={() => setLoginModal(false)}
+              />
+              <Button onClick={() => setSignUpModal(true)} type="button">
+                Sign Up
+              </Button>
+              <SignUpModal
+                isOpen={signUpModal}
+                onClose={() => setSignUpModal(false)}
+              />
+            </>
+          )}
         </div>
       </nav>
     </header>

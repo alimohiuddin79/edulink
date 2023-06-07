@@ -1,11 +1,16 @@
 import React from "react";
 import TextEditor from "../components/TextEditor/TextEditor";
 import ResumeAccordian from "../components/Accordians/ResumeAccordian";
-import LightHeading from "../components/LightHeading";
+import Head from "next/head";
 
 const ResumeBuilder = () => {
   return (
     <>
+      <Head>
+        {/* TODO: Import all meta tags later */}
+        {/* <meta /> */}
+        <title>Resume Builder</title>
+      </Head>
       <section className="py-12">
         <div
           className="
