@@ -1,19 +1,17 @@
+"use client";
 import React from 'react'
 import axios from "axios";
 import { CldUploadButton } from 'next-cloudinary';
+import getCurrentUser from '../actions/getCurrentUser';
 
-interface ImageUploaderProps {
-    path: string;
-    id: string;
-}
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({ path, id }) => {
+const ImageUploader = async ({ path } : { path: string }) => {
+    const user = await getCurrentUser();
+    const { _id } = user;
     const handleUpload = (result: any) => {
-        axios.post(`/api/${path}`, {
+        axios.post(`/api/${path}/${_id}`, {
             img: result?.info?.secure_url,
-            id
-        })
-
+        });
     }
   return (
     <>
@@ -21,9 +19,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ path, id }) => {
             options={{ maxFiles: 1 }}
             onUpload={handleUpload}
             uploadPreset='vh8znhrn'
-        >
-
-        </CldUploadButton>
+        />
     </>
   )
 }

@@ -16,10 +16,13 @@ export async function POST(
             name,
             email,
             password,
-            type
+            type,
+            phoneNumber,
+            gender,
+            dob
         } = body;
 
-        if (!email || !name ||!password) {
+        if (!email || !name ||!password || !type || !phoneNumber || !gender || !dob) {
             return new NextResponse('Missing info', { status: 400 });
         }
 
@@ -35,7 +38,10 @@ export async function POST(
             name: _.startCase(_.toLower(name)),
             email,
             password: hashPassword,
-            type
+            phoneNumber,
+            type,
+            gender,
+            dob
         });
 
         return NextResponse.json({

@@ -11,7 +11,7 @@ interface IParams {
 
 export async function POST(
     request: Request,
-    { params }: { params: IParams }
+    // { params }: { params: IParams }
 ) {
     const body = await request.json();
     const { title, content, tags, img } = body;
@@ -21,7 +21,7 @@ export async function POST(
         console.log(currentUser);
         
 
-        const { userId } = params;
+        // const { userId } = params;
 
         if(!currentUser?._id || !currentUser?.email) {
             return new NextResponse('Unauthorized', { status: 401 });
@@ -34,7 +34,7 @@ export async function POST(
         if(currentUser?.type === 'counselor' || currentUser?.type === 'admin' || currentUser?.admin) {
             const newBlog = await Blog.create({
                 title: _.startCase(_.toLower(title)),
-                authorId: userId,
+                authorId: currentUser._id,
                 authorName: currentUser.name,
                 content,
                 tags: tags === undefined ? [] : tags,

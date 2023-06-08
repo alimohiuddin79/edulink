@@ -14,10 +14,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // type = 'student' || type = 'counselor'
     type: {
         type: String,
         enum: ['student', 'counselor', 'admin'],
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female'],
+        required: true
+    },
+    dob: {
+        type: Date,
         required: true
     },
     isApproved: {

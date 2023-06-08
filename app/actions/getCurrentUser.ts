@@ -5,6 +5,7 @@ import getSession from "./getSession";
 
 const getCurrentUser = async () => {
     try {
+        await connectDB();
         const session = await getSession();
 
         if (!session?.user?.email) {
