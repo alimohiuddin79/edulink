@@ -1,12 +1,12 @@
 const initFullProps = {
-    menubar: "edit view format tools table help",
+    menubar: "file edit view insert format tools table help",
     formats: {
       tindent_format: { selector: "p", styles: { "text-indent": "40mm" } },
     },
     toolbar:
-      "fullscreen preview print | undo redo | sizeselect | fontselect | fontsizeselect | bold italic backcolor | \
+      "print | undo redo | emoticons | bold italic backcolor |  sizeselect | fontselect | fontsizeselect  | \
       alignleft aligncenter alignright alignjustify tindent_bttn | tfecha_bttn | \
-      bullist numlist outdent indent | removeformat | restoredraft wordcount | image media",
+      bullist numlist outdent indent | fullscreen | code | charmap searchreplace | ltr rtl  | removeformat nonbreaking pagebreak | restoredraft wordcount | image media | help",
     plugins: [
       "wordcount",
       "link print",
@@ -17,13 +17,42 @@ const initFullProps = {
       "image",
       "media",
       "table",
-      "link",
+      "link autolink",
       "lists",
+      "lists advlist",
+      "anchor",
+      "autoresize",
+      "autosave",
+      "charmap",
+      "code",
+      "codesample",
+      "directionality",
+      "emoticons",
+      "fullscreen",
+      "help",
+      "importcss",
+      "nonbreaking",
+      "preview",
+      "quickbars",
+      "searchreplace",
+      "visualblocks",
+      "visualchars"
     ],
     mobile: {
       theme: "mobile",
       toolbar: ["undo", "bold", "italic", "styleselect, restoredraft"],
     },
+    charmap: [
+      [160, 'no-break space'],
+      [173, 'soft hyphen'],
+      [34, 'quotation mark'],
+      ...
+      [8205, 'zero width joiner'],
+      [8206, 'left-to-right mark'],
+      [8207, 'right-to-left mark']
+    ],
+    fullscreen_native: true,
+    link_default_target: '_blank',
     fontsize_formats: "8px 10px 12px 14px 18px 24px 28px 32px",
     contextmenu: "copy wordcount",
     browser_spellcheck: true,
@@ -56,7 +85,7 @@ const initFullProps = {
         },
       });
     },
-    height: "800px",
+    height: "642px",
     content_css: "document",
     content_style: `
       html {

@@ -17,27 +17,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             gap-y-6
         "
         >
-          <h1
-            className="
-            text-4xl
-            font-semibold
-            text-[#36F8B2]
-            text-center
-            mb-10
-        "
-          >
-            Blogs
-          </h1>
-          <div
-            className='
-                flex
-                flex-col
-                justify-center
-                items-center
-            '
-          >
             {children}
-          </div>
         </div>
       </section>
     </>

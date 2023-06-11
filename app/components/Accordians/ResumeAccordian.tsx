@@ -23,7 +23,7 @@ const ResumeAccordian = () => {
         <AccordionItem>
           <h2>
             <AccordionButton _expanded={{ bg: "primary-1", color: "white" }}>
-              <Box as="span" flex="1" textAlign="left" fontWeight={'semibold'}>
+              <Box as="span" flex="1" textAlign="center" fontWeight={'semibold'}>
                 ⭐⭐⭐ Click here to show tips ⭐⭐⭐
               </Box>
               <AccordionIcon />

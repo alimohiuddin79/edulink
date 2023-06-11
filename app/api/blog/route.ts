@@ -4,19 +4,7 @@ import Blog from "@/app/mongodb/models/Blog";
 import { NextResponse } from "next/server";
 import _ from "lodash";
 
-export async function GET(
-    request: Request
-) {
-    try {
-        await connectDB();
-        const blogs = await Blog.find({});
 
-        return NextResponse.json(blogs);
-    } catch (error: any) {
-        console.log(error);
-        return new NextResponse('Internal Error', { status: 404 });
-    }
-}
 
 export async function POST(
     request: Request,
@@ -27,7 +15,7 @@ export async function POST(
     try {
         await connectDB();
         const currentUser = await getCurrentUser();
-        console.log(currentUser);
+        // console.log(currentUser);
         
 
         // const { userId } = params;

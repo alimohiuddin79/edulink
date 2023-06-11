@@ -4,28 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import initFullProps from "./initFullprops";
 
-const TextEditor = ({ onEditorChange, value }: { onEditorChange: (newContent: any) => void, value: string }) => {
+const TextEditor = ({ onEditorChange, value, initialValue }: { onEditorChange: (newContent: any) => void, value: any, initialValue: string }) => {
   const editorRef = useRef<any>(null);
   const [content, setContent] = useState<any>(undefined);
   const session = useSession();
 
-  // const handleEditorChange = () => {
-  //   if (editorRef.current) {
-  //     const htmlContent = editorRef.current.getContent();
-  //     // console.log(htmlContent);
-  //     setContent(htmlContent);
-  //   }
-  // };
+  
   const handleEditorChange = () => {
     if (editorRef.current) {
       const htmlContent = editorRef.current.getContent();
+      setContent(htmlContent);
       onEditorChange(htmlContent);
     }
   };
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.setContent(value);
+      setContent(value);
     }
   }, [value]);
 
@@ -40,6 +35,8 @@ const TextEditor = ({ onEditorChange, value }: { onEditorChange: (newContent: an
           init={{
             ...initFullProps,
           }}
+          initialValue={initialValue}
+          value={content}
           onEditorChange={handleEditorChange}
           onInit={(evt, editor) => (editorRef.current = editor)}
         />

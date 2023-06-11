@@ -1,29 +1,26 @@
-"use client";
-import { useState, useEffect } from 'react'
 import axios from "axios";
+import BlogsContainer from "../components/BlogsContainer";
+import PageWrapper from "../components/PageWrapper";
 
-const Blogs = () => {
-  const [blogs, setBlogs] = useState([]);
+async function getBlogs() {
+  const res = await axios.get('http://localhost:3000/api/blogs');
+  const data = await res.data;
+  return data;
+}
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await axios.get('/api/blog');
+const BlogsPage = async () => {
+  const blogs = await getBlogs();
+  // console.log(blogs);
+  
+  
 
-        setBlogs(res.data);
-        console.log(res.data);
-      } catch (error: any) {
-        console.log(error);
-      }
-    }
-
-    fetchBlogs();
-  }, [])
   return (
-    <div>
-        {blogs}
-    </div>
+    <>
+      <PageWrapper pageName="Blogs">
+        <BlogsContainer blogs={blogs.reverse()} />
+      </PageWrapper>
+    </>
   )
 }
 
-export default Blogs;
+export default BlogsPage;

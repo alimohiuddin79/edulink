@@ -6,6 +6,7 @@ import Link from "next/link";
 import Button from "./Button";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Avatar } from "@chakra-ui/react";
 
 const Header = () => {
   const session = useSession();
@@ -62,11 +63,13 @@ const Header = () => {
           className="
               flex
               gap-x-3
+              items-center
             "
         >
           {session?.status === "authenticated" ? (
             <>
-            {session?.data?.user?.name}
+            <Avatar size='sm' name={session?.data?.user?.name || ''} src={session?.data?.user?.image || ''} />{' '}
+            {/* {session?.data?.user?.name} */}
             <Button onClick={() => signOut()} type="button">
                 Sign Out
             </Button>
