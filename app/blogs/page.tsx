@@ -9,7 +9,7 @@ const BlogsPage = () => {
   const [blogs, setBlogs] = useState([]);
   useEffect(() => {
     const fetchBlogs = async () => {
-      const res = await axios.get('http://localhost:3000/api/blogs');
+      const res = await axios.get('https://edulink-three.vercel.app/api/blogs');
       const data = await res.data;
       if(data) {
         setBlogs(data);
@@ -19,7 +19,7 @@ const BlogsPage = () => {
     fetchBlogs();
   }, []);
 
-  console.log(blogs);
+  // console.log(blogs);
 
   return (
     <>

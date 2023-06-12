@@ -74,7 +74,7 @@ const BlogsTable = ({ blogs }: SelectedTableProps) => {
     if (deleteRowId) {
       // console.log(`Deleted row with ID: ${deleteRowId}`);
       setLoading(true);
-      axios.delete(`http://localhost:3000/api/blog/${deleteRowId}`)
+      axios.delete(`https://edulink-three.vercel.app/api/blog/${deleteRowId}`)
       .then(() => {
         toast({
           title: "Blog Deleted.",

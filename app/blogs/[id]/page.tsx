@@ -26,7 +26,7 @@ const BlogPostPage = ({ params }: { params: IParams }) => {
 
   useEffect(() => {
     const fetchBlog = async () => {
-      const res = await axios.get(`http://localhost:3000/api/blog/${params.id}`);
+      const res = await axios.get(`https://edulink-three.vercel.app/api/blog/${params.id}`);
       const data = await res.data;
       setBlog(data);
     };

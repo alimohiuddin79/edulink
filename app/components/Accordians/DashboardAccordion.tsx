@@ -31,23 +31,23 @@ const DashboardAccordian = () => {
   //   return res.json();
   // };
 
-  // const { data, mutate, error, isLoading } = useSWR('http://localhost:3000/api/blog/', fetcher);
+  // const { data, mutate, error, isLoading } = useSWR('https://edulink-three.vercel.app/api/blog/', fetcher);
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get("http://localhost:3000/api/user-data/");
+      const res = await axios.get("https://edulink-three.vercel.app/api/user-data/");
       const data = await res.data;
       setUser(data);
       setType(data?.type);
     };
     const getBlogs = async () => {
-      const res = await axios.get(`http://localhost:3000/api/blogs/${user._id}`);
+      const res = await axios.get(`https://edulink-three.vercel.app/api/blogs/${user._id}`);
       const data = await res.data;
       // console.log(data);
       setBlogs(data);
     };
     const getAllUsers = async () => {
-      const res = await axios.get("http://localhost:3000/api/users");
+      const res = await axios.get("https://edulink-three.vercel.app/api/users");
       const data = await res.data;
       setUsers(data);
     };

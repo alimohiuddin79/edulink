@@ -87,7 +87,7 @@ const EditBlogPage = ({ params }: { params: IParams }) => {
   const handleSubmit = async (e: any) => {
     setLoading(true)
     e.preventDefault();
-    await axios.patch(`http://localhost:3000/api/blog/${params.id}`, {
+    await axios.patch(`https://edulink-three.vercel.app/blog/${params.id}`, {
       title,
       content,
       tags,
@@ -123,13 +123,13 @@ const EditBlogPage = ({ params }: { params: IParams }) => {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get("http://localhost:3000/api/user-data");
+      const res = await axios.get("https://edulink-three.vercel.app/api/user-data");
       const data = await res.data;
       setUser(data);
     };
 
     const getBlogData = async () => {
-      const res = await axios.get(`http://localhost:3000/api/blog/${params.id}`);
+      const res = await axios.get(`https://edulink-three.vercel.app/api/blog/${params.id}`);
       const data = await res.data;
       setBlog(data);
       setTitle(data.title || "");

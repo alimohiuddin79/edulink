@@ -66,7 +66,7 @@ const CreateBlog = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    const res = await axios.post("http://localhost:3000/api/blog/", {
+    const res = await axios.post("https://edulink-three.vercel.app/api/blog/", {
       title,
       content,
       tags,
