@@ -1,18 +1,25 @@
+"use client";
 import axios from "axios";
 import BlogsContainer from "../components/BlogsContainer";
 import PageWrapper from "../components/PageWrapper";
+import { useEffect, useState } from "react";
 
-async function getBlogs() {
-  const res = await axios.get('http://localhost:3000/api/blogs');
-  const data = await res.data;
-  return data;
-}
+const BlogsPage = () => {
 
-const BlogsPage = async () => {
-  const blogs = await getBlogs();
-  // console.log(blogs);
-  
-  
+  const [blogs, setBlogs] = useState([]);
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const res = await axios.get('http://localhost:3000/api/blogs');
+      const data = await res.data;
+      if(data) {
+        setBlogs(data);
+      }
+    }
+
+    fetchBlogs();
+  }, []);
+
+  console.log(blogs);
 
   return (
     <>
